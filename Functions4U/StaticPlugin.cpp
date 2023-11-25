@@ -7,57 +7,57 @@
 namespace Upp {
 
 Array<StaticPlugin::PluginData>& StaticPlugin::Plugins() {
-	static Array<PluginData> x;
-	return x;
+    static Array<PluginData> x;
+    return x;
 }
 
 StaticPlugin::~StaticPlugin() {
-	End();
+    End();
 }
 
 void StaticPlugin::End() {
-	if (!data)
-		return;
-	for (int i = 0; i < Plugins().GetCount(); ++i) {
-		if (Plugins()[i].name == name && Plugins()[i].type == type && Plugins()[i].instance == instance) {
-			Plugins()[i].Delete(data);
-			data = 0;
-			return;
-		}
-	}
-	for (int i = 0; i < Plugins().GetCount(); ++i) {
-		if (Plugins()[i].name == "" && Plugins()[i].type == type && Plugins()[i].instance == instance) {
-			Plugins()[i].Delete(data);
-			data = 0;
-			return;
-		}
-	}	
+    if (!data)
+        return;
+    for (int i = 0; i < Plugins().GetCount(); ++i) {
+        if (Plugins()[i].name == name && Plugins()[i].type == type && Plugins()[i].instance == instance) {
+            Plugins()[i].Delete(data);
+            data = 0;
+            return;
+        }
+    }
+    for (int i = 0; i < Plugins().GetCount(); ++i) {
+        if (Plugins()[i].name == "" && Plugins()[i].type == type && Plugins()[i].instance == instance) {
+            Plugins()[i].Delete(data);
+            data = 0;
+            return;
+        }
+    }
 }
 
 bool StaticPlugin::_Init(const char *_name, const char *_type) {
-	type = _type;
-	End();
-	for (int i = 0; i < Plugins().GetCount(); ++i) {
-		if (Plugins()[i].name == _name && Plugins()[i].type == type) {
-			data = Plugins()[i].New();
-			name = _name;
-			instance = this;
-			Plugins()[i].instance = instance;
-			return true;
-		}
-	}
-	for (int i = 0; i < Plugins().GetCount(); ++i) {
-		if (Plugins()[i].name == "" && Plugins()[i].type == type) {
-			if (data)
-				Plugins()[i].Delete(data);
-			data = Plugins()[i].New();
-			name = "";
-			instance = this;
-			Plugins()[i].instance = instance;
-			return false;
-		}
-	}
-	return false;
+    type = _type;
+    End();
+    for (int i = 0; i < Plugins().GetCount(); ++i) {
+        if (Plugins()[i].name == _name && Plugins()[i].type == type) {
+            data = Plugins()[i].New();
+            name = _name;
+            instance = this;
+            Plugins()[i].instance = instance;
+            return true;
+        }
+    }
+    for (int i = 0; i < Plugins().GetCount(); ++i) {
+        if (Plugins()[i].name == "" && Plugins()[i].type == type) {
+            if (data)
+                Plugins()[i].Delete(data);
+            data = Plugins()[i].New();
+            name = "";
+            instance = this;
+            Plugins()[i].instance = instance;
+            return false;
+        }
+    }
+    return false;
 }
 
 }
