@@ -200,7 +200,7 @@ String Replace(String str, char find, char replace) {
         if (ret[i] == find)
             ret[i] = replace;
     }
-    return ret;
+        return static_cast<String>(ret);
 }
 
 // Rename file or folder
@@ -604,7 +604,7 @@ String LoadFile_Safe(const String fileName)
     if (nsize > 1)
         s.Cat(buf, nsize-1);
     close(fid);
-    return s;
+    return static_cast<String>(s);
 }
 
 String LoadFile(const char *fileName, off_t from, size_t len)
@@ -633,7 +633,7 @@ String LoadFile(const char *fileName, off_t from, size_t len)
     if (nsize > 1 && (len == 0 || loaded < len))
         s.Cat(buf, int(nsize-1));
     close(fid);
-    return s;
+    return static_cast<String>(s);
 }
 
 String GetExtExecutable(const String _ext)
@@ -2884,7 +2884,7 @@ Image GetRect(const Image& orig, const Rect &r) {
             s++;
         }
     }
-    return ib;
+    return static_cast<Image>(ib);
 }
 
 
